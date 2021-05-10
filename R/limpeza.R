@@ -1,0 +1,91 @@
+#' Limpeza e organizacao dos dados do 180
+#'
+#' Essa funcao limpa e organiza as bases de dados do 180 para os anos
+#' de 2015, 2016, 2018 e 2019
+#'
+#' @param df base de dados de ligacoes do 180
+#'
+#' @return retorna a base devidamente limpa e organizada para a análise
+
+limpeza <- function(df, ...) {
+
+  df %>%
+    janitor::clean_names() %>%
+    janitor::remove_empty() %>%
+    select("data",
+           "grupo",
+           "violacao",
+           "uf",
+           "municipio",
+           "faixa_etaria_vitima",
+           "sexo_vitima",
+           "cor_raca_vitima",
+           "identidade_genero_vitima",
+           "relacao_vitima_x_suspeito",
+           "faixa_etaria_suspeito",
+           "sexo_suspeito",
+           "cor_raca_suspeito",
+           "relacao_vitima_x_demandante",
+           "sexo_demandante",
+           "cor_raca_demandante") %>%
+    mutate(
+      data = lubridate::date(data),
+      ano = lubridate::year(data),
+      mes = lubridate::month(data),
+      semana = lubridate::week(data),
+      dia = lubridate::day(data),
+      dia_semana = forcats::as_factor(lubridate::wday(data, label = TRUE))
+    ) %>%
+    mutate(municipio = stringr::str_to_lower(municipio),
+           municipio = stringr::str_remove_all(municipio, "[:punct:]"),
+           municipio = stringi::stri_trans_general(municipio, "Latin-ASCII"),
+           grupo = stringr::str_to_lower(grupo),
+           grupo = stringr::str_remove_all(grupo, "[:punct:]"),
+           grupo = stringi::stri_trans_general(grupo, "Latin-ASCII"),
+           violacao = stringr::str_to_lower(violacao),
+           violacao = stringr::str_remove_all(violacao, "[:punct:]"),
+           violacao = stringi::stri_trans_general(violacao, "Latin-ASCII")) %>%
+    filter(municipio %in% c("sao paulo",
+                            "aruja",
+                            "barueri",
+                            "biritiba mirim",
+                            "caieiras",
+                            "cajamar",
+                            "carapicuiba",
+                            "cotia",
+                            "diadema",
+                            "embu das artes",
+                            "embu guaçu",
+                            "francisco morato",
+                            "franco da rocha",
+                            "guararema",
+                            "guarulhos",
+                            "itapecerica da serra",
+                            "itapevi",
+                            "itaquaquecetuba",
+                            "jandira",
+                            "juquitiba",
+                            "mairipora",
+                            "maua",
+                            "mogi das cruzes",
+                            "osasco",
+                            "pirapora do bom jesus",
+                            "poa",
+                            "ribeirao pires",
+                            "rio grande da serra",
+                            "salesopolis",
+                            "santa isabel",
+                            "santana de parnaiba",
+                            "santo andre",
+                            "sao bernardo do campo",
+                            "sao caetano do sul",
+                            "sao lourenço da serra",
+                            "suzano",
+                            "taboao da serra",
+                            "vargem grande paulista"
+                            )) %>%
+    group_by(data) %>%
+    mutate(ligacoes_no_dia = n()) %>%
+    ungroup()
+
+}
