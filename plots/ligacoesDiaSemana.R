@@ -18,7 +18,7 @@ cols <- c("#DCDCDC", "#D3D3D3",
                 # "#DC143C", "#B22222", "#A52A2A",
                 # "#8B0000", "#800000")
 
-df %>%
+plot <- df %>%
    mutate(dia_semana = forcats::fct_relevel(dia_semana,
                                    "seg",
                                    "qua",
@@ -42,7 +42,7 @@ axis.title.y = element_blank(),
 axis.title.x = element_text(size = 15, color = 'black'),
 axis.text.x = element_text(size = 12, color = 'black'),
 axis.text.y = element_text(size = 12, color = 'black')) +
-ylim(c(0, 10000)) +
+ylim(c(0, 30000)) +
   scale_color_manual(
     values = darken(cols, 0.3)
   ) +

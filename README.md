@@ -30,6 +30,21 @@ example workflow can be found here:
 
 You can also embed plots, for example:
 
+    #> 
+    #> Attaching package: 'cowplot'
+    #> The following object is masked from 'package:ggthemes':
+    #> 
+    #>     theme_map
+    #> -- Attaching packages --------------------------------------- tidyverse 1.3.1 --
+    #> v ggplot2 3.3.3     v purrr   0.3.4
+    #> v tibble  3.1.1     v dplyr   1.0.6
+    #> v tidyr   1.1.3     v stringr 1.4.0
+    #> v readr   1.4.0     v forcats 0.5.1
+    #> -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+    #> x dplyr::filter() masks stats::filter()
+    #> x dplyr::lag()    masks stats::lag()
+    #> Warning: Unknown levels in `f`: sÃ¡b
+
 ![](README_files/figure-gfm/pressure-1.png)<!-- -->
 
 In that case, don’t forget to commit and push the resulting figure
